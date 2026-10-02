@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FunBCS: Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems</title>
+  <meta name="description"
+        content="FunBCS recovers PDE coefficient fields from 3% sparse observations by optimizing the input of a function-space diffusion denoiser, reducing the error of the current state of the art by 27-64% while running 1.4-2.1x faster.">
+  <meta name="keywords" content="FunBCS, diffusion models, PDE inverse problems, function space, Darcy flow, Navier-Stokes, backward-consistent sampling">
+  <meta property="og:title" content="Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems">
+  <meta property="og:description" content="FunBCS: input space optimization for diffusion-based PDE inverse problems from 3% sparse observations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bamb00zled82.github.io/funbcs-website/">
+  <meta property="og:image" content="https://bamb00zled82.github.io/funbcs-website/static/images/method_overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- ============================== header ============================== -->
+<section class="hero has-gradient">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <span class="method-name">FunBCS</span>
+          <h1 class="title is-2 publication-title">Backward-Consistent Diffusion Sampling<br>for Sparsely Observed PDE Inverse Problems</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Yida Pan<sup>1*</sup>,</span>
+            <span class="author-block">Muhammad H. Ashiq<sup>1*</sup>,</span>
+            <span class="author-block">Chanyong Jung<sup>1</sup>,</span>
+            <span class="author-block">Yixuan Jia<sup>1</sup>,</span>
+            <span class="author-block">Jonah M. Miller<sup>1,2</sup>,</span>
+            <span class="author-block">Ismail R. Alkhouri<sup>1,2&dagger;</sup>,</span>
+            <span class="author-block">Qing Qu<sup>1&dagger;</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors publication-affil">
+            <span class="author-block"><sup>1</sup>University of Michigan</span>
+            <span class="author-block"><sup>2</sup>Los Alamos National Laboratory</span>
+          </div>
+          <div class="publication-authors publication-note">
+            <sup>*</sup>Joint first authors &nbsp;&nbsp; <sup>&dagger;</sup>Joint last authors
+          </div>
+
+          <div class="publication-links">
+            <!-- Paper: replace href="#" with the PDF link and drop is-placeholder once it is out -->
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark is-placeholder" title="Coming soon" aria-disabled="true">
+                <span class="icon"><svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span>Paper</span><span class="soon">(soon)</span>
+              </a>
+            </span>
+            <!-- arXiv: replace href="#" with https://arxiv.org/abs/XXXX.XXXXX and drop is-placeholder -->
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark is-placeholder" title="Coming soon" aria-disabled="true">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span><span class="soon">(soon)</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://github.com/bamb00zled82/FunBCS" target="_blank" rel="noopener" class="button is-normal is-rounded is-dark">
+                <span class="icon"><svg class="svg-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== teaser ============================== -->
+<section class="section first">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <video poster="./static/images/posters/darcy_581_ddis_vs_funbcs.jpg" class="wide" autoplay muted loop playsinline preload="auto">
+        <source src="./static/videos/darcy_581_ddis_vs_funbcs.mp4" type="video/mp4">
+      </video>
+      <p class="caption has-text-centered">
+        Darcy flow recovered from 3% sparse observations of the solution field: DDIS misplaces the discontinuities,
+        whereas <b>FunBCS</b> recovers their locations and shapes.
+      </p>
+      <div class="columns teaser-row">
+        <div class="column has-text-centered">
+          <video poster="./static/images/posters/teaser_darcy.jpg" class="wide" autoplay muted loop playsinline preload="auto">
+            <source src="./static/videos/teaser_darcy.mp4" type="video/mp4">
+          </video>
+          <p class="media-label">Denoising process on Darcy flow</p>
+        </div>
+        <div class="column has-text-centered">
+          <video poster="./static/images/posters/teaser_ns.jpg" class="wide" autoplay muted loop playsinline preload="auto">
+            <source src="./static/videos/teaser_ns.mp4" type="video/mp4">
+          </video>
+          <p class="media-label">Denoising process on Navier&ndash;Stokes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== abstract ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Abstract</h2>
+      <div class="content has-text-justified">
+        <p>
+          Recovering Partial Differential Equation (PDE) coefficient fields from extremely sparse observations is a
+          severely ill-posed inverse problem for which generative machine learning methods (e.g., diffusion models)
+          have become a leading way to encode the prior. Recent state-of-the-art diffusion solvers lift these priors to
+          function spaces, finding a physics-consistent reconstruction in the output space of the diffusion denoiser.
+          We prove that, in a discontinuous PDE setting, output space methods can result in failure to appropriately
+          minimize the unobserved error with the correct coefficient field. Consequently, we propose
+          <b>Fun</b>ction space <b>B</b>ackward-<b>C</b>onsistent <b>S</b>ampling (FunBCS), an <i>input space</i>
+          optimization approach for solving PDE problems which aims to find the best input such that the denoiser
+          reconstruction is physics-consistent. We then prove that FunBCS appropriately minimizes the unobserved error,
+          unlike output space optimization methods. Per our theoretical analysis, we also provide insights on how to
+          dynamically allocate the number of input space optimization steps used throughout the sampling process. Our
+          evaluations, across four PDE inverse problems (including the discontinuous Darcy flow), demonstrate that
+          FunBCS reduces the reconstruction error by 27&ndash;64% while running 1.4&ndash;2.1&times; faster when
+          compared to the current state-of-the-art.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== method ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Output Space vs. Input Space Optimization</h2>
+      <div class="content has-text-justified">
+        <p class="lead">
+          Output space methods first denoise and then fit the observations, so the fit may leave the unobserved part of
+          the reconstruction unchanged from the denoiser prediction, and errors invisible to the forward operator
+          persist. This is particularly pronounced for discontinuous coefficients, whose prior has distinct modes for
+          different discontinuity locations. FunBCS instead optimizes the denoiser's <i>input</i>, which changes both
+          the observed and the unobserved components of the reconstruction.
+        </p>
+      </div>
+      <img class="fig-img" src="./static/images/method_overview.png"
+           alt="Output space optimization (DDIS) versus input space optimization (FunBCS)">
+      <p class="caption has-text-justified">
+        <b>(a)</b> Output space optimization methods such as DDIS enforce measurement consistency on a reconstruction
+        near the denoiser's (D<sub>&theta;</sub>) output, requiring 20 optimization steps at each of their 100 noise
+        levels. <b>(b)</b> FunBCS jointly incorporates measurement consistency and denoising by iteratively computing
+        the denoiser output, so the reconstruction a<sub>0</sub> = D<sub>&theta;</sub>(v*) is exactly an output of
+        the denoiser. It requires only 10 noise levels, and the number of input space optimization steps at each of
+        them, F(t), is dynamically allocated by our scheduler.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== results ============================== -->
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+      <div class="content has-text-justified">
+        <p>
+          We evaluate on four PDE inverse problems at a resolution of 128&times;128: <b>Darcy flow</b>,
+          <b>Poisson</b>, <b>Helmholtz</b> and <b>Navier&ndash;Stokes</b>, each observed at 500 randomly placed points
+          of the solution field (3% of the grid) without noise. Each video below shows the reconstruction of one test
+          sample by every method: the upper block shows the coefficient field and the lower block the solution field
+          estimated from the same sparse observations, each with its absolute error to the ground truth underneath and
+          its error on that sample. Every method is run with its published default test-time compute budget, and
+          FunBCS in accuracy mode. FunBCS and DDIS obtain the solution field by applying the neural operator to their
+          recovered coefficient field, whereas FunDPS and DiffusionPDE sample both fields jointly. On Darcy, the error
+          of the coefficient field is the pixel error rate.
+        </p>
+        <p>
+          FunBCS attains the lowest reconstruction error on every task. In efficiency mode it is also the fastest
+          method in our comparison, running 1.4&ndash;2.1&times; faster than DDIS, the current state-of-the-art
+          diffusion-based PDE solver, with 27&ndash;64% lower reconstruction error.
+        </p>
+      </div>
+
+      <div class="pde-tabs" role="tablist">
+        <button class="pde-tab active" data-target="pde-darcy" role="tab" aria-selected="true">Darcy</button>
+        <button class="pde-tab" data-target="pde-poisson" role="tab" aria-selected="false">Poisson</button>
+        <button class="pde-tab" data-target="pde-helmholtz" role="tab" aria-selected="false">Helmholtz</button>
+        <button class="pde-tab" data-target="pde-ns" role="tab" aria-selected="false">Navier&ndash;Stokes</button>
+      </div>
+      <div class="pde-panel active" id="pde-darcy">
+        <video poster="./static/images/posters/results_darcy.jpg" muted loop playsinline autoplay preload="auto"><source src="./static/videos/results_darcy.mp4" type="video/mp4"></video>
+      </div>
+      <div class="pde-panel" id="pde-poisson">
+        <video poster="./static/images/posters/results_poisson.jpg" muted loop playsinline preload="none"><source src="./static/videos/results_poisson.mp4" type="video/mp4"></video>
+      </div>
+      <div class="pde-panel" id="pde-helmholtz">
+        <video poster="./static/images/posters/results_helmholtz.jpg" muted loop playsinline preload="none"><source src="./static/videos/results_helmholtz.mp4" type="video/mp4"></video>
+      </div>
+      <div class="pde-panel" id="pde-ns">
+        <video poster="./static/images/posters/results_ns.jpg" muted loop playsinline preload="none"><source src="./static/videos/results_ns.mp4" type="video/mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== main table ============================== -->
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Main Results</h2>
+      <div class="table-wrap">
+        <table class="results">
+          <thead>
+            <tr>
+              <th rowspan="2">Method</th>
+              <th colspan="2" class="group">Poisson</th>
+              <th colspan="2" class="group">Helmholtz</th>
+              <th colspan="2" class="group">Navier&ndash;Stokes</th>
+              <th colspan="2" class="group">Darcy</th>
+              <th rowspan="2">s/sample</th>
+            </tr>
+            <tr class="metrics">
+              <th>rel. &ell;<sub>2</sub> (%)</th><th>E<sub>s</sub></th>
+              <th>rel. &ell;<sub>2</sub> (%)</th><th>E<sub>s</sub></th>
+              <th>rel. &ell;<sub>2</sub> (%)</th><th>E<sub>s</sub></th>
+              <th>err. rate (%)</th><th>E<sub>s</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DiffusionPDE</td>
+              <td>21.20<span class="std">&plusmn;6.86</span></td><td>0.150<span class="std">&plusmn;0.119</span></td>
+              <td>18.93<span class="std">&plusmn;5.04</span></td><td>0.133<span class="std">&plusmn;0.084</span></td>
+              <td>9.49<span class="std">&plusmn;1.65</span></td><td><span class="second">0.230</span><span class="std">&plusmn;0.025</span></td>
+              <td>7.49<span class="std">&plusmn;4.60</span></td><td>0.311<span class="std">&plusmn;0.169</span></td>
+              <td>274.5</td>
+            </tr>
+            <tr>
+              <td>FunDPS</td>
+              <td>22.05<span class="std">&plusmn;7.11</span></td><td>0.169<span class="std">&plusmn;0.116</span></td>
+              <td>16.25<span class="std">&plusmn;4.09</span></td><td>0.156<span class="std">&plusmn;0.077</span></td>
+              <td>8.18<span class="std">&plusmn;1.53</span></td><td>0.381<span class="std">&plusmn;0.032</span></td>
+              <td>5.04<span class="std">&plusmn;2.71</span></td><td>0.152<span class="std">&plusmn;0.060</span></td>
+              <td><span class="second">14.5</span></td>
+            </tr>
+            <tr>
+              <td>DDIS</td>
+              <td>15.76<span class="std">&plusmn;5.08</span></td><td>0.071<span class="std">&plusmn;0.053</span></td>
+              <td>15.47<span class="std">&plusmn;4.34</span></td><td>0.070<span class="std">&plusmn;0.051</span></td>
+              <td>8.36<span class="std">&plusmn;1.55</span></td><td><span class="best">0.158</span><span class="std">&plusmn;0.017</span></td>
+              <td>7.48<span class="std">&plusmn;3.89</span></td><td>0.165<span class="std">&plusmn;0.089</span></td>
+              <td>18.0</td>
+            </tr>
+            <tr class="sep ours">
+              <td>FunBCS (uniform)</td>
+              <td>10.51<span class="std">&plusmn;3.38</span></td><td><span class="second">0.050</span><span class="std">&plusmn;0.038</span></td>
+              <td><span class="second">9.90</span><span class="std">&plusmn;2.71</span></td><td><span class="best">0.056</span><span class="std">&plusmn;0.034</span></td>
+              <td>6.23<span class="std">&plusmn;1.13</span></td><td>0.300<span class="std">&plusmn;0.069</span></td>
+              <td>2.82<span class="std">&plusmn;1.56</span></td><td>0.113<span class="std">&plusmn;0.053</span></td>
+              <td>16.5</td>
+            </tr>
+            <tr class="ours">
+              <td>FunBCS-EF</td>
+              <td><span class="second">10.22</span><span class="std">&plusmn;3.33</span></td><td>0.056<span class="std">&plusmn;0.049</span></td>
+              <td>10.04<span class="std">&plusmn;2.95</span></td><td>0.085<span class="std">&plusmn;0.053</span></td>
+              <td><span class="second">6.14</span><span class="std">&plusmn;1.11</span></td><td>0.280<span class="std">&plusmn;0.059</span></td>
+              <td><span class="second">2.69</span><span class="std">&plusmn;1.50</span></td><td><span class="second">0.086</span><span class="std">&plusmn;0.041</span></td>
+              <td><span class="best">10.4</span></td>
+            </tr>
+            <tr class="ours">
+              <td>FunBCS-AC</td>
+              <td><span class="best">9.60</span><span class="std">&plusmn;3.08</span></td><td><span class="best">0.047</span><span class="std">&plusmn;0.039</span></td>
+              <td><span class="best">9.06</span><span class="std">&plusmn;2.51</span></td><td><span class="second">0.069</span><span class="std">&plusmn;0.037</span></td>
+              <td><span class="best">5.89</span><span class="std">&plusmn;1.04</span></td><td>0.288<span class="std">&plusmn;0.051</span></td>
+              <td><span class="best">2.32</span><span class="std">&plusmn;1.27</span></td><td><span class="best">0.080</span><span class="std">&plusmn;0.033</span></td>
+              <td>16.5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption has-text-justified">
+        Recovery of physical coefficient fields with relative &ell;<sub>2</sub> error and spectral energy error
+        E<sub>s</sub> on 100 test instances from 3% observations. s/sample is seconds per sample on one NVIDIA A100.
+        FunBCS-AC and FunBCS-EF denote FunBCS in accuracy mode and in efficiency mode; FunBCS (uniform) is FunBCS
+        without the scheduling function (80 input space optimization steps at every noise level, 800 in total).
+        Errors are mean &plusmn; standard deviation over the test instances; lower is better. Best in <b>bold</b>,
+        second best <u>underlined</u>.
+      </p>
+      <div class="content has-text-justified" style="margin-top: 1rem;">
+        <p>
+          Relative to DDIS, the error falls by 39% on Poisson, 41% on Helmholtz, 30% on Navier&ndash;Stokes, and 69% on
+          Darcy. The largest gain is on Darcy flow, whose piecewise-constant coefficient makes the prior sharply
+          multimodal: the error rate drops from 7.48% to 2.32%, a 3.2&times; reduction.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== mode escape ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Escaping a Wrong Mode</h2>
+      <div class="content has-text-justified">
+        <p>
+          Our analysis shows that output space methods such as DDIS can fail when the denoiser selects the wrong mode,
+          while FunBCS can correct it. We test this on Darcy flow, where several possible discontinuity locations
+          result in a multimodal learned prior: on 50 test instances, we move every discontinuity location of the true
+          field a<sub>+</sub> by five pixels to obtain a wrong field a<sub>&minus;</sub> (11% pixel error), and start
+          both samplers from a<sub>&minus;</sub> renoised to a noise level &sigma;. When started at &sigma; = 0.5,
+          FunBCS escapes a<sub>&minus;</sub> on 94% of the instances, whereas DDIS <i>escapes on none</i>; doubling
+          the inference budget of DDIS only increases this to 18%. If the denoiser is wrong, DDIS can fail, and this is
+          exacerbated towards the end of the sampling process, whereas FunBCS can adjust the denoiser's decision.
+        </p>
+      </div>
+      <div class="fig-narrow">
+        <img class="fig-img" src="./static/images/darcy_escape.png" alt="Escape rates of FunBCS and DDIS on Darcy flow">
+      </div>
+      <p class="caption has-text-justified">
+        Share of the 50 Darcy test instances on which each sampler escapes the wrong field a<sub>&minus;</sub>, against
+        the noise level &sigma; at which sampling starts from renoised a<sub>&minus;</sub>. An instance escapes when its
+        final reconstruction assigns most of the pixels where a<sub>+</sub> and a<sub>&minus;</sub> differ to the true
+        field a<sub>+</sub>, with a lower error rate than a<sub>&minus;</sub>. The hollow marker is DDIS with twice its
+        inference budget.
+      </p>
+
+      <h3 class="title is-4 sub has-text-centered" style="margin-top: 2.2rem;">Discontinuous Poisson</h3>
+      <div class="content has-text-justified">
+        <p>
+          We also validate the theory on a discontinuous Poisson problem, where the denoiser can pick the wrong
+          discontinuity location. FunBCS obtains significantly less error to the correct field a<sub>+</sub> than DDIS,
+          both in the nullspace of the forward operator, which the observations cannot see, and overall.
+        </p>
+      </div>
+      <div class="columns">
+        <div class="column has-text-centered">
+          <img class="fig-img" src="./static/images/poisson_nullspace_error.png" alt="Nullspace error to a+">
+          <p class="caption">(a) Nullspace error to a<sub>+</sub>.</p>
+        </div>
+        <div class="column has-text-centered">
+          <img class="fig-img" src="./static/images/poisson_overall_error.png" alt="Cumulative mean error to a+">
+          <p class="caption">(b) Cumulative mean error to a<sub>+</sub>.</p>
+        </div>
+      </div>
+      <p class="caption has-text-justified">
+        In the nullspace (a) and overall (b), FunBCS (orange) has significantly less error than DDIS (blue) on the
+        discontinuous Poisson problem, validating our theoretical results.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== scaling ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">Scaling with Test-Time Compute</h2>
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <img class="fig-img" src="./static/images/scaling_poisson.png" alt="Poisson error versus time per sample">
+        </div>
+        <div class="column is-6">
+          <div class="content has-text-justified">
+            <p>
+              At every time budget, FunBCS is more accurate than baselines. For example, FunBCS at 8 seconds per sample
+              achieves 11.8% relative &ell;<sub>2</sub> error on Poisson, whereas DDIS, at best, obtains 13.7% error
+              while running for 72 seconds.
+            </p>
+            <p class="caption">
+              Poisson reconstruction error with respect to the time per sample. All methods are run using the same
+              hardware. FunBCS and DDIS use the same diffusion prior.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== bibtex ============================== -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop">
+    <div class="content-block fade-in">
+      <h2 class="title is-3 has-text-centered">BibTeX</h2>
+<pre class="bibtex"><code>@misc{pan2026funbcs,
+  title  = {Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems},
+  author = {Pan, Yida and Ashiq, Muhammad H. and Jung, Chanyong and Jia, Yixuan and
+            Miller, Jonah M. and Alkhouri, Ismail R. and Qu, Qing},
+  year   = {2026}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://github.com/bamb00zled82/FunBCS" target="_blank" rel="noopener" title="Code">
+        <svg class="svg-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <p style="margin-top: 0.8rem;">
+        This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>. It is built on the
+        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template, with styling inspired by the
+        <a href="https://daps-inverse-problem.github.io/">DAPS</a> project page.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
