@@ -330,29 +330,6 @@
         field a<sub>+</sub>, with a lower error rate than a<sub>&minus;</sub>. The hollow marker is DDIS with twice its
         inference budget.
       </p>
-
-      <h3 class="title is-4 sub has-text-centered" style="margin-top: 2.2rem;">Discontinuous Poisson</h3>
-      <div class="content has-text-justified">
-        <p>
-          We also validate the theory on a discontinuous Poisson problem, where the denoiser can pick the wrong
-          discontinuity location. FunBCS obtains significantly less error to the correct field a<sub>+</sub> than DDIS,
-          both in the nullspace of the forward operator, which the observations cannot see, and overall.
-        </p>
-      </div>
-      <div class="columns">
-        <div class="column has-text-centered">
-          <img class="fig-img" src="./static/images/poisson_nullspace_error.png" alt="Nullspace error to a+">
-          <p class="caption">(a) Nullspace error to a<sub>+</sub>.</p>
-        </div>
-        <div class="column has-text-centered">
-          <img class="fig-img" src="./static/images/poisson_overall_error.png" alt="Cumulative mean error to a+">
-          <p class="caption">(b) Cumulative mean error to a<sub>+</sub>.</p>
-        </div>
-      </div>
-      <p class="caption has-text-justified">
-        In the nullspace (a) and overall (b), FunBCS (orange) has significantly less error than DDIS (blue) on the
-        discontinuous Poisson problem, validating our theoretical results.
-      </p>
     </div>
   </div>
 </section>
