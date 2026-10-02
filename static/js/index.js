@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.classList.add('active');
     tab.setAttribute('aria-selected', 'true');
     const panel = document.getElementById(tab.dataset.target);
-    panel.classList.add('active');
+    panel.classList.add('active', 'switched');
     const v = panel.querySelector('video');
     if (v) {
       if (v.preload === 'none') { v.preload = 'auto'; v.load(); }

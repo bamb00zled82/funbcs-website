@@ -1,22 +1,22 @@
 /* FunBCS project page. Base: the Nerfies template (github.com/nerfies/nerfies.github.io, CC BY-SA 4.0);
-   rounded content blocks and tabs in the style of daps-inverse-problem.github.io. White and gold / beige theme. */
+   rounded content blocks and tabs in the style of daps-inverse-problem.github.io. White and light blue theme. */
 :root {
-  --bg: #fffefc;            /* warm white */
-  --bg-2: #fcf4e6;          /* page gradient end */
-  --cream: #fcebd2;         /* tile gradient, light end */
-  --cream-2: #fbe5c2;
-  --beige: #fae1b3;         /* tile gradient, deep end */
-  --beige-3: #f3cf8f;
-  --line: #f1e2c8;          /* borders */
-  --line-2: #e6c88f;
-  --gold: #db944b;          /* accent */
-  --brown: #9b6321;         /* glyph brown */
-  --brown-dark: #6f4512;
-  --ink: #17120c;           /* near-black text */
-  --ink-2: #3b2f22;
-  --ink-soft: #6b5843;      /* captions, secondary text */
-  --shadow: rgba(155, 99, 33, 0.08);
-  --shadow-2: rgba(155, 99, 33, 0.14);
+  --bg: #fbfdff;            /* cool white */
+  --bg-2: #eef5fd;          /* page gradient end */
+  --cream: #e8f2fd;         /* tile gradient, light end */
+  --cream-2: #dfedfc;
+  --beige: #d6e8fb;         /* tile gradient, deep end */
+  --beige-3: #bcd8f6;
+  --line: #dceafa;          /* borders */
+  --line-2: #b9d4f2;
+  --gold: #4a90d9;          /* accent (mid blue) */
+  --brown: #1f5fa8;         /* deep blue */
+  --brown-dark: #164a85;
+  --ink: #0f172a;           /* near-black text */
+  --ink-2: #253247;
+  --ink-soft: #5b6b80;      /* captions, secondary text */
+  --shadow: rgba(31, 95, 168, 0.08);
+  --shadow-2: rgba(31, 95, 168, 0.14);
 }
 html { scroll-behavior: smooth; }
 body {
@@ -32,7 +32,7 @@ a:hover { color: var(--brown-dark); }
 
 /* ---------- header ---------- */
 .hero.has-gradient {
-  background: linear-gradient(135deg, #fffaf2 0%, var(--cream) 52%, var(--beige) 100%);
+  background: linear-gradient(135deg, #f7fbff 0%, var(--cream) 52%, var(--beige) 100%);
   border-bottom: 1px solid var(--line);
   position: relative;
   overflow: hidden;
@@ -42,8 +42,8 @@ a:hover { color: var(--brown-dark); }
   position: absolute;
   top: -50%; left: -50%; width: 200%; height: 200%;
   background: radial-gradient(circle at 22% 38%, rgba(255, 255, 255, 0.55) 0%, transparent 46%),
-              radial-gradient(circle at 78% 62%, rgba(219, 148, 75, 0.12) 0%, transparent 42%),
-              radial-gradient(circle at 50% 96%, rgba(155, 99, 33, 0.06) 0%, transparent 32%);
+              radial-gradient(circle at 78% 62%, rgba(74, 144, 217, 0.12) 0%, transparent 42%),
+              radial-gradient(circle at 50% 96%, rgba(31, 95, 168, 0.06) 0%, transparent 32%);
   animation: shimmer 12s ease-in-out infinite alternate;
 }
 @keyframes shimmer {
@@ -68,7 +68,7 @@ a:hover { color: var(--brown-dark); }
   letter-spacing: 1.5px;
   font-size: 0.95rem;
   color: var(--brown);
-  background: linear-gradient(90deg, #fdf1df, var(--beige));
+  background: linear-gradient(90deg, #eef6fe, var(--beige));
   border: 1px solid var(--line-2);
   box-shadow: 0 3px 10px var(--shadow);
 }
@@ -80,7 +80,7 @@ a:hover { color: var(--brown-dark); }
 .publication-links { margin-top: 1.4rem; }
 .publication-links .link-block { display: inline-block; margin: 0.3rem 0.25rem; }
 .hero.has-gradient .button.is-dark {
-  background: linear-gradient(90deg, #fffaf2, var(--cream-2));
+  background: linear-gradient(90deg, #f7fbff, var(--cream-2));
   border: 1px solid var(--line-2);
   color: var(--brown-dark);
   font-weight: 600;
@@ -155,7 +155,7 @@ video.wide { width: 100%; height: auto; display: block; border-radius: 12px; }
   padding: 0.55rem 1.4rem;
   border-radius: 12px;
   border: 1px solid var(--line-2);
-  background: #fffaf2;
+  background: #f7fbff;
   color: var(--brown);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -164,11 +164,12 @@ video.wide { width: 100%; height: auto; display: block; border-radius: 12px; }
 .pde-tab.active {
   background: linear-gradient(90deg, var(--cream), var(--beige-3));
   color: var(--brown-dark);
-  border-color: #dcae62;
-  box-shadow: 0 4px 14px rgba(219, 148, 75, 0.3);
+  border-color: #8fbbe9;
+  box-shadow: 0 4px 14px rgba(74, 144, 217, 0.3);
 }
 .pde-panel { display: none; }
-.pde-panel.active { display: block; animation: panel-in 0.35s ease; }
+.pde-panel.active { display: block; }
+.pde-panel.active.switched { animation: panel-in 0.35s ease; }     /* fade only on tab switches, not at page load */
 @keyframes panel-in { from { opacity: 0; } to { opacity: 1; } }
 .pde-panel video { width: 100%; max-width: 1100px; height: auto; display: block; margin: 0 auto; border-radius: 12px; }
 
@@ -188,9 +189,9 @@ table.results thead tr.metrics th { font-weight: 600; color: var(--ink-soft); fo
 table.results td:first-child, table.results th:first-child { text-align: left; }
 table.results tbody tr { border-bottom: 1px solid var(--line); }
 table.results tbody tr.sep { border-top: 2px solid var(--line-2); }
-table.results tr.ours { background: rgba(250, 225, 179, 0.28); }
+table.results tr.ours { background: rgba(214, 232, 251, 0.45); }
 table.results tr.ours td:first-child { color: var(--brown-dark); font-weight: 600; }
-table.results .std { font-size: 0.78em; color: #8a7760; margin-left: 1px; }
+table.results .std { font-size: 0.78em; color: #7b8aa0; margin-left: 1px; }
 table.results .best { font-weight: 700; color: var(--ink); }
 table.results .second { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
 table.results th.group { border-bottom: 1px solid var(--line-2); }
@@ -201,7 +202,7 @@ table.results th.group { border-bottom: 1px solid var(--line-2); }
 .fade-in.no-anim { transition: none; }
 @media (prefers-reduced-motion: reduce) { .fade-in { opacity: 1; transform: none; transition: none; } }
 pre.bibtex {
-  background: #fdf6ea;
+  background: #f3f8fe;
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 1.1rem 1.3rem;
@@ -211,7 +212,7 @@ pre.bibtex {
   color: var(--ink-2);
 }
 .footer { background: transparent; padding: 2.2rem 1.5rem 3rem; color: var(--ink-soft); font-size: 0.92rem; }
-.footer a { color: var(--brown); text-decoration: underline; text-decoration-color: rgba(155, 99, 33, 0.4); }
+.footer a { color: var(--brown); text-decoration: underline; text-decoration-color: rgba(31, 95, 168, 0.4); }
 .footer .icon-link { font-size: 24px; color: var(--brown); margin: 0 0.4rem; text-decoration: none; }
 
 /* ---------- icons and small screens ---------- */
