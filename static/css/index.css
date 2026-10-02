@@ -47,6 +47,8 @@ a:hover { color: var(--blue-500); }
 .publication-authors { font-family: 'Source Sans 3', sans-serif; color: var(--ink-2); }
 .publication-authors .author-block { display: inline-block; margin: 0 0.35rem; }
 .publication-authors sup { font-size: 0.7em; color: var(--blue-700); }
+.publication-authors a { color: var(--blue-500); }
+.publication-authors a:hover { color: var(--blue-700); text-decoration: underline; }
 .publication-affil { color: var(--ink-soft); margin-top: 0.4rem; }
 .publication-note { color: var(--ink-soft); font-size: 0.9rem; margin-top: 0.35rem; }
 .publication-links { margin-top: 1.4rem; }

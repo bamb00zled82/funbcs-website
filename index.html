@@ -35,13 +35,13 @@
           <span class="method-name">FunBCS</span>
           <h1 class="title is-2 publication-title">Backward-Consistent Diffusion Sampling<br>for Sparsely Observed PDE Inverse Problems</h1>
           <div class="is-size-5 publication-authors">
-            <span class="author-block">Yida Pan<sup>1*</sup>,</span>
-            <span class="author-block">Muhammad H. Ashiq<sup>1*</sup>,</span>
-            <span class="author-block">Chanyong Jung<sup>1</sup>,</span>
-            <span class="author-block">Yixuan Jia<sup>1</sup>,</span>
-            <span class="author-block">Jonah M. Miller<sup>1,2</sup>,</span>
-            <span class="author-block">Qing Qu<sup>1&dagger;</sup>,</span>
-            <span class="author-block">Ismail R. Alkhouri<sup>1,2&dagger;</sup></span>
+            <span class="author-block"><a href="https://yidapan.org/" target="_blank" rel="noopener">Yida Pan</a><sup>1*</sup>,</span>
+            <span class="author-block"><a href="https://ashiqwisc.github.io/" target="_blank" rel="noopener">Muhammad H. Ashiq</a><sup>1*</sup>,</span>
+            <span class="author-block"><a href="https://sites.google.com/view/jcy132/%ED%99%88" target="_blank" rel="noopener">Chanyong Jung</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://umjiayx.github.io/" target="_blank" rel="noopener">Yixuan Jia</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=oQbwqPIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Jonah M. Miller</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://qingqu.engin.umich.edu/" target="_blank" rel="noopener">Qing Qu</a><sup>1&dagger;</sup>,</span>
+            <span class="author-block"><a href="https://sites.google.com/view/ismailalkhouri/about?authuser=0" target="_blank" rel="noopener">Ismail R. Alkhouri</a><sup>1,2&dagger;</sup></span>
           </div>
           <div class="is-size-6 publication-authors publication-affil">
             <span class="author-block"><sup>1</sup>University of Michigan</span>
@@ -176,14 +176,15 @@
           sample by every method: the upper block shows the coefficient field and the lower block the solution field
           estimated from the same sparse observations, each with its absolute error to the ground truth underneath and
           its error on that sample. Every method is run with its published default test-time compute budget, and
-          FunBCS in accuracy mode. FunBCS and DDIS obtain the solution field by applying the neural operator to their
+          FunBCS in efficiency mode. FunBCS and DDIS obtain the solution field by applying the neural operator to their
           recovered coefficient field, whereas FunDPS and DiffusionPDE sample both fields jointly. On Darcy, the error
           of the coefficient field is the pixel error rate.
         </p>
         <p>
           FunBCS attains the lowest reconstruction error on every task. In efficiency mode it is also the fastest
-          method in our comparison, running 1.4&ndash;2.1&times; faster than DDIS, the current state-of-the-art
-          diffusion-based PDE solver, with 27&ndash;64% lower reconstruction error.
+          method in our comparison, running, on average, 1.7&times;, 1.4&times;, and 26.4&times; faster than DDIS,
+          FunDPS, and DiffusionPDE, respectively, with 27&ndash;64% lower reconstruction error than DDIS, the current
+          state-of-the-art diffusion-based PDE solver.
         </p>
       </div>
 
