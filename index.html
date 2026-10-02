@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#e8f2fd">
+  <meta name="theme-color" content="#ffffff">
   <title>FunBCS: Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems</title>
   <meta name="description"
         content="FunBCS recovers PDE coefficient fields from 3% sparse observations by optimizing the input of a function-space diffusion denoiser, reducing the error of the current state of the art by 27-64% while running 1.4-2.1x faster.">
@@ -82,7 +82,7 @@
 <!-- ============================== teaser ============================== -->
 <section class="section first">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <video poster="./static/images/posters/darcy_581_ddis_vs_funbcs.jpg" class="wide" autoplay muted loop playsinline preload="auto">
         <source src="./static/videos/darcy_581_ddis_vs_funbcs.mp4" type="video/mp4">
       </video>
@@ -111,7 +111,7 @@
 <!-- ============================== abstract ============================== -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Abstract</h2>
       <div class="content has-text-justified">
         <p>
@@ -138,7 +138,7 @@
 <!-- ============================== method ============================== -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Output Space vs. Input Space Optimization</h2>
       <div class="content has-text-justified">
         <p class="lead">
@@ -166,9 +166,9 @@
 <!-- ============================== results ============================== -->
 <section class="section">
   <div class="container is-max-widescreen">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Experimental Results</h2>
-      <div class="content has-text-justified">
+      <div class="content has-text-justified text-col">
         <p>
           We evaluate on four PDE inverse problems at a resolution of 128&times;128: <b>Darcy flow</b>,
           <b>Poisson</b>, <b>Helmholtz</b> and <b>Navier&ndash;Stokes</b>, each observed at 500 randomly placed points
@@ -212,7 +212,7 @@
 <!-- ============================== main table ============================== -->
 <section class="section">
   <div class="container is-max-widescreen">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Main Results</h2>
       <div class="table-wrap">
         <table class="results">
@@ -284,7 +284,7 @@
           </tbody>
         </table>
       </div>
-      <p class="caption has-text-justified">
+      <p class="caption has-text-justified text-col">
         Recovery of physical coefficient fields with relative &ell;<sub>2</sub> error and spectral energy error
         E<sub>s</sub> on 100 test instances from 3% observations. s/sample is seconds per sample on one NVIDIA A100.
         FunBCS-AC and FunBCS-EF denote FunBCS in accuracy mode and in efficiency mode; FunBCS (uniform) is FunBCS
@@ -292,7 +292,7 @@
         Errors are mean &plusmn; standard deviation over the test instances; lower is better. Best in <b>bold</b>,
         second best <u>underlined</u>.
       </p>
-      <div class="content has-text-justified" style="margin-top: 1rem;">
+      <div class="content has-text-justified text-col" style="margin-top: 1rem;">
         <p>
           Relative to DDIS, the error falls by 39% on Poisson, 41% on Helmholtz, 30% on Navier&ndash;Stokes, and 69% on
           Darcy. The largest gain is on Darcy flow, whose piecewise-constant coefficient makes the prior sharply
@@ -306,7 +306,7 @@
 <!-- ============================== mode escape ============================== -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Escaping a Wrong Mode</h2>
       <div class="content has-text-justified">
         <p>
@@ -360,7 +360,7 @@
 <!-- ============================== scaling ============================== -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">Scaling with Test-Time Compute</h2>
       <div class="columns is-vcentered">
         <div class="column is-6">
@@ -387,7 +387,7 @@
 <!-- ============================== bibtex ============================== -->
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop">
-    <div class="content-block fade-in">
+    <div class="section-body">
       <h2 class="title is-3 has-text-centered">BibTeX</h2>
 <pre class="bibtex"><code>@misc{pan2026funbcs,
   title  = {Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems},
@@ -408,8 +408,7 @@
       <p style="margin-top: 0.8rem;">
         This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
         Commons Attribution-ShareAlike 4.0 International License</a>. It is built on the
-        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template, with styling inspired by the
-        <a href="https://daps-inverse-problem.github.io/">DAPS</a> project page.
+        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template.
       </p>
     </div>
   </div>

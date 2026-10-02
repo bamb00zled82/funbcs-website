@@ -1,4 +1,4 @@
-// FunBCS project page: result tabs, scroll fade-in, and play videos only while they are on screen.
+// FunBCS project page: result tabs, and play videos only while they are on screen.
 document.addEventListener('DOMContentLoaded', () => {
   // PDE tabs: show one panel, restart its video, pause the others
   const tabs = document.querySelectorAll('.pde-tab');
@@ -20,17 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
       v.play().catch(() => {});
     }
   }));
-
-  // ?static (screenshots) or reduced motion: show everything at once
-  if (new URLSearchParams(location.search).has('static') || matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible', 'no-anim'));
-  }
-
-  // fade sections in as they scroll into view
-  const fade = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); fade.unobserve(e.target); }
-  }), { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => fade.observe(el));
 
   // autoplaying videos: pause off screen, resume on screen (saves CPU on long pages)
   const vis = new IntersectionObserver(entries => entries.forEach(e => {
