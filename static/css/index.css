@@ -30,28 +30,9 @@ body {
 a { color: var(--brown); }
 a:hover { color: var(--brown-dark); }
 
-/* ---------- header ---------- */
-.hero.has-gradient {
-  background: linear-gradient(135deg, #f7fbff 0%, var(--cream) 52%, var(--beige) 100%);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-}
-.hero.has-gradient::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle at 22% 38%, rgba(255, 255, 255, 0.55) 0%, transparent 46%),
-              radial-gradient(circle at 78% 62%, rgba(74, 144, 217, 0.12) 0%, transparent 42%),
-              radial-gradient(circle at 50% 96%, rgba(31, 95, 168, 0.06) 0%, transparent 32%);
-  animation: shimmer 12s ease-in-out infinite alternate;
-}
-@keyframes shimmer {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(-3%, 2%) rotate(1deg); }
-}
-.hero.has-gradient .hero-body { padding-top: 4rem; padding-bottom: 3.2rem; }
-.hero.has-gradient .container { position: relative; z-index: 1; }
+/* ---------- header (no own background: it sits on the page background like every section) ---------- */
+.hero.page-header { background: transparent; }
+.hero.page-header .hero-body { padding-top: 4rem; padding-bottom: 1.6rem; }
 .publication-title {
   font-family: 'Source Sans 3', sans-serif;
   font-weight: 700;
@@ -79,7 +60,7 @@ a:hover { color: var(--brown-dark); }
 .publication-note { color: var(--ink-soft); font-size: 0.9rem; margin-top: 0.35rem; }
 .publication-links { margin-top: 1.4rem; }
 .publication-links .link-block { display: inline-block; margin: 0.3rem 0.25rem; }
-.hero.has-gradient .button.is-dark {
+.hero.page-header .button.is-dark {
   background: linear-gradient(90deg, #f7fbff, var(--cream-2));
   border: 1px solid var(--line-2);
   color: var(--brown-dark);
@@ -87,7 +68,7 @@ a:hover { color: var(--brown-dark); }
   box-shadow: 0 2px 8px var(--shadow);
   transition: all 0.25s ease;
 }
-.hero.has-gradient .button.is-dark:hover {
+.hero.page-header .button.is-dark:hover {
   background: linear-gradient(90deg, var(--cream), var(--beige));
   color: var(--brown-dark);
   transform: translateY(-2px);
