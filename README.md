@@ -1,7 +1,7 @@
 # FunBCS project page
 
 Project page for *Backward-Consistent Diffusion Sampling for Sparsely Observed PDE Inverse Problems* (FunBCS).
-Code: https://github.com/bamb00zled82/FunBCS
+Live: https://yidapan.org/funbcs-website/ · Code: https://github.com/bamb00zled82/FunBCS
 
 Local preview: run `python -m http.server` in this folder and open http://localhost:8000.
 
