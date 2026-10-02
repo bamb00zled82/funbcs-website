@@ -168,7 +168,7 @@
   <div class="container is-max-widescreen">
     <div class="section-body">
       <h2 class="title is-3 has-text-centered">Experimental Results</h2>
-      <div class="content has-text-justified text-col">
+      <div class="content has-text-justified">
         <p>
           We evaluate on four PDE inverse problems at a resolution of 128&times;128: <b>Darcy flow</b>,
           <b>Poisson</b>, <b>Helmholtz</b> and <b>Navier&ndash;Stokes</b>, each observed at 500 randomly placed points
@@ -284,7 +284,7 @@
           </tbody>
         </table>
       </div>
-      <p class="caption has-text-justified text-col">
+      <p class="caption has-text-justified">
         Recovery of physical coefficient fields with relative &ell;<sub>2</sub> error and spectral energy error
         E<sub>s</sub> on 100 test instances from 3% observations. s/sample is seconds per sample on one NVIDIA A100.
         FunBCS-AC and FunBCS-EF denote FunBCS in accuracy mode and in efficiency mode; FunBCS (uniform) is FunBCS
@@ -292,7 +292,7 @@
         Errors are mean &plusmn; standard deviation over the test instances; lower is better. Best in <b>bold</b>,
         second best <u>underlined</u>.
       </p>
-      <div class="content has-text-justified text-col" style="margin-top: 1rem;">
+      <div class="content has-text-justified" style="margin-top: 1rem;">
         <p>
           Relative to DDIS, the error falls by 39% on Poisson, 41% on Helmholtz, 30% on Navier&ndash;Stokes, and 69% on
           Darcy. The largest gain is on Darcy flow, whose piecewise-constant coefficient makes the prior sharply
