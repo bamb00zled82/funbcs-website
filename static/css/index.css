@@ -61,9 +61,6 @@ a:hover { color: var(--blue-500); }
   transition: background 0.2s ease;
 }
 .hero.page-header .button.is-dark:hover { background: var(--blue-600); color: #ffffff; }
-.hero.page-header .button.is-placeholder,
-.hero.page-header .button.is-placeholder:hover { background: var(--blue-100); color: #6b85a8; cursor: default; }
-.button .soon { font-size: 0.75em; margin-left: 0.35em; opacity: 0.85; }
 
 /* ---------- sections ---------- */
 .section { padding: 2.1rem 1.5rem; }
